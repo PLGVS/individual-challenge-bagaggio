@@ -3,6 +3,7 @@ package com.plgvs.individual_challenge_bagaggio.services;
 import com.plgvs.individual_challenge_bagaggio.entities.Produto;
 import com.plgvs.individual_challenge_bagaggio.repositories.ProdutoRepository;
 import com.plgvs.individual_challenge_bagaggio.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +27,24 @@ public class ProdutoService {
     public Produto findById(Long id){
         Optional<Produto> produto = produtoRepository.findById(id);
         return produto.orElseThrow(() -> new ResourceNotFoundException(id));
+    }
+
+    public Produto update(Long id, Produto produto){
+        try {
+            Produto obj = produtoRepository.getReferenceById(id);
+            updateData(produto, obj);
+            return produtoRepository.save(obj);
+        }
+        catch (EntityNotFoundException e){
+            throw new ResourceNotFoundException(id);
+        }
+    }
+
+    public void updateData(Produto produto, Produto obj){
+        obj.setNome(produto.getNome());
+        obj.setDescricao(produto.getDescricao());
+        obj.setPreco(produto.getPreco());
+        obj.setQuantidade(produto.getQuantidade());
+
     }
 }

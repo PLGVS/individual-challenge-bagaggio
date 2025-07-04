@@ -1,14 +1,18 @@
 package com.plgvs.individual_challenge_bagaggio.entities;
 
+import jakarta.persistence.*;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-
+@Entity
+@Table(name = "produto_tb")
 public class Produto implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private String descricao;

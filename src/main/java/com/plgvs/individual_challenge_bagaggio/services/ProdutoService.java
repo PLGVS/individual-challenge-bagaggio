@@ -5,6 +5,7 @@ import com.plgvs.individual_challenge_bagaggio.repositories.ProdutoRepository;
 import com.plgvs.individual_challenge_bagaggio.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,5 +47,17 @@ public class ProdutoService {
         obj.setPreco(produto.getPreco());
         obj.setQuantidade(produto.getQuantidade());
 
+    }
+
+    public void delete(Long id){
+        try {
+            if (!produtoRepository.existsById(id)){
+                throw new ResourceNotFoundException(id);
+            }
+            produtoRepository.deleteById(id);
+        }
+        catch (ResourceNotFoundException e){
+            throw new ResourceNotFoundException(id);
+        }
     }
 }

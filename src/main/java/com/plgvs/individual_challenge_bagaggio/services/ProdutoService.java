@@ -2,6 +2,7 @@ package com.plgvs.individual_challenge_bagaggio.services;
 
 import com.plgvs.individual_challenge_bagaggio.entities.Produto;
 import com.plgvs.individual_challenge_bagaggio.repositories.ProdutoRepository;
+import com.plgvs.individual_challenge_bagaggio.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,8 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
 
-    public Optional<Produto> findById(Long id){
-        return produtoRepository.findById(id);
+    public Produto findById(Long id){
+        Optional<Produto> produto = produtoRepository.findById(id);
+        return produto.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 }

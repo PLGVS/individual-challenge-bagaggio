@@ -1,7 +1,6 @@
 package com.plgvs.individual_challenge_bagaggio.entities;
 
 import jakarta.persistence.*;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -16,15 +15,18 @@ public class Produto implements Serializable {
     private Long id;
     private String nome;
     private String descricao;
+    private String categoria;
     private Double preco;
     private Integer quantidade;
 
+
     public Produto() {}
 
-    public Produto(Long id, String nome, String descricao, Double preco, Integer quantidade) {
+    public Produto(Long id, String nome, String descricao, String categoria, Double preco, Integer quantidade) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
+        this.categoria = categoria;
         this.preco = preco;
         this.quantidade = quantidade;
     }
@@ -53,6 +55,14 @@ public class Produto implements Serializable {
         this.descricao = descricao;
     }
 
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
     public Double getPreco() {
         return preco;
     }
@@ -68,6 +78,7 @@ public class Produto implements Serializable {
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
+
 
     @Override
     public boolean equals(Object o) {
